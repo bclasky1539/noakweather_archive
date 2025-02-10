@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="text-center">
+        <h1 class="mt-5">NOAK Weather Dashboard</h1> <br>
+        <form action="/" method="POST">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <label for="city">City</label>
+                    </div>
+                    <div class="col">
+                        <label for="state">State</label>
+                    </div>
+                    <div class="col">
+                        <label for="country">Country</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm">
+                        <label for="cityName"></label><input type="text" id="cityName" name="cityName" value="" required
+                                                             placeholder="Enter City Name" class="form-control">
+                    </div>
+                    <div class="col-sm">
+                        <label for="stateName"></label><input type="text" id="stateName" name="stateName" value=""
+                                                              placeholder="Enter State Name (Only for US/Canada)"
+                                                              class="form-control">
+                    </div>
+                    <div class="col-sm">
+                        <label for="countryName"></label><input type="text" id="countryName" name="countryName" value=""
+                                                                required placeholder="Enter Country Name"
+                                                                class="form-control">
+                    </div>
+                </div>
+            </div>
+            <br>
+            <button class="submit btn btn-light">Find</button>
+        </form>
+        {% if current_weather_data.code == 200 %}
+            <br> City/Country: {{ location_data.city }}, {{ location_data.country }} <br>
+            <br> {{ current_weather_data.cloud_main }}: {{ current_weather_data.cloud_description }} <br>
+            <img src="https://openweathermap.org/img/wn/{{ current_weather_data.cloud_icon }}@2x.png" alt="Icon"> <br>
+            Temperature: {{ current_weather_data.temperature }} {{ formats_data.temperature_format }} <br>
+            Feels Like: {{ current_weather_data.feels_like }} {{ formats_data.temperature_format }} <br>
+            Minimum Temperature: {{ current_weather_data.minimum }} {{ formats_data.temperature_format }} <br>
+            Maximum Temperature: {{ current_weather_data.maximum }} {{ formats_data.temperature_format }} <br>
+            Pressure: {{ current_weather_data.pressure }} {{ formats_data.pressure_format }} <br>
+            Ground Pressure : {{ current_weather_data.pressure_ground_level }} {{ formats_data.pressure_format }} <br>
+            Humidity: {{ current_weather_data.humidity }}{{ formats_data.humidity_format }} <br>
+            Visibility: {{ current_weather_data.visibility }} {{ formats_data.visibility_format }} <br>
+            Wind Speed: {{ current_weather_data.wind_speed }} {{ formats_data.wind_speed_format }} <br>
+            Wind Direction: {{ current_weather_data.wind_direction }} {{ formats_data.wind_direction_format }} <br>
+            {% if current_weather_data.wind_gust != -999999.0 %}
+                Wind Gust: {{ current_weather_data.wind_gust }} {{ formats_data.wind_speed_format }} <br>
+            {% endif %}
+            Sunrise: {{ current_weather_data.sunrise }} <br>
+            Sunset: {{ current_weather_data.sunset }} <br>
+        {% endif %}
+
+    </div>
+{% endblock %}

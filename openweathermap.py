@@ -31,6 +31,8 @@ class Location:
     country: str | None = None
     latitude: float | None = None
     longitude: float | None = None
+    code: int = 0
+    message: str | None = None
 
 
 # pylint: disable=too-many-instance-attributes
@@ -96,17 +98,19 @@ def get_lan_lon(city_name: str, state_code: str, country_code: str, limit: int =
         print(f"get_lan_lon response: {resp.status_code}")
         print(resp.json())
         print(type(resp.json()))
-        if resp.status_code == 200:
+        if resp.status_code == 200 and resp.json():
             if resp.json()[0].get("state") is not None:
                 state = resp.json()[0].get("state")
             else:
                 state = None
             data = Location(
-                city=resp.json()[0].get("local_names").get("en"),
+                city=resp.json()[0].get("name"),    #.get("local_names").get("en"),
                 state=state,
                 country=resp.json()[0].get("country"),
                 latitude=resp.json()[0].get("lat"),
-                longitude=resp.json()[0].get("lon")
+                longitude=resp.json()[0].get("lon"),
+                code=resp.json()[0].get("cod"),
+                message=None
             )
         else:
             data = Location(
@@ -114,7 +118,9 @@ def get_lan_lon(city_name: str, state_code: str, country_code: str, limit: int =
                 state=None,
                 country=None,
                 latitude=None,
-                longitude=None
+                longitude=None,
+                code=resp.json()[0].get("cod") if resp.json() else -1,
+                message=resp.json()[0].get("message") if resp.json() else None
             )
     except HTTPError as e:
         print(f"{get_full_class_name(e)}: {e.read().decode()}")
@@ -123,7 +129,9 @@ def get_lan_lon(city_name: str, state_code: str, country_code: str, limit: int =
             state=None,
             country=None,
             latitude=None,
-            longitude=None
+            longitude=None,
+            code=-1,
+            message=None
         )
     except (IndexError, ValueError, TypeError, AttributeError) as e:
         print(f"{get_full_class_name(e)}: {e.args}")
@@ -133,7 +141,9 @@ def get_lan_lon(city_name: str, state_code: str, country_code: str, limit: int =
             state=None,
             country=None,
             latitude=None,
-            longitude=None
+            longitude=None,
+            code=-1,
+            message=None
         )
 
     return data

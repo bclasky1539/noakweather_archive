@@ -62,7 +62,9 @@
                          style="max-width: 20rem;">
                         <div class="card-body">
                             <h5 class="card-title font-weight-bold text-center">Current Weather</h5>
-                            <br> City/Country: {{ location_data.city }}, {{ location_data.country }} <br>
+                            <br> City, Country Code: {{ location_data.city }}, {{ location_data.country }} <br>
+                            Latitude: {{ location_data.latitude }} <br>
+                            Longitude: {{ location_data.longitude }} <br>
                             <br> {{ current_weather_data.cloud_main }}: {{ current_weather_data.cloud_description }}
                             <br>
                             <img src="https://openweathermap.org/img/wn/{{ current_weather_data.cloud_icon }}@2x.png"

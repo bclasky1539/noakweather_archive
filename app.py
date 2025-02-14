@@ -4,7 +4,7 @@ This python script is main script.
 from typing import Type
 
 from flask import Flask, render_template, request
-from openweathermap import main as get_weather, Location, CurrentWeatherData, Formats
+from Openweathermap.weather import main as get_weather, Location, CurrentWeatherData, Formats
 from utils.get_class_name import get_full_class_name
 
 app = Flask(__name__)

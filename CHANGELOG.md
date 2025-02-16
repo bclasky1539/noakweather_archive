@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 0.1.5 - Date: February 16, 2025
+
+- Updated project structure to put openweathermap code in its own package
+- Improved dataclasses for openweathermap current weather. Modified weather.py for these changes
+
 ## Version 0.1.4 - Date: February 12, 2025
 
 - Cleaned up UI screen to be more visually friendly

@@ -1,6 +1,7 @@
 # ignoring specific files
 .DS_Store
 .env
+openweathermap/datasets/forecast.py
 # ignoring specific directories
 __pycache__/
 documentation/

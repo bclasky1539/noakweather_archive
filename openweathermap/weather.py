@@ -40,9 +40,9 @@ def get_lan_lon(city_name: str, state_code: str, country_code: str, limit: int =
         resp: Response = requests.get(
             f"{owm_geo_url}{city_name},{state_code},{country_code}&limit={limit}&appid={api_key}",
             timeout=5)
-        print(f"get_lan_lon response: {resp.status_code}")
-        print(resp.json())
-        print(type(resp.json()))
+        print(f"get_lan_lon: {resp.status_code = }")
+        print(f"{resp.json() = }")
+        print(f"{type(resp.json()) = }")
         if resp.status_code == 200 and resp.json():
             location_data = Location.from_dict(resp.json()[0])
     except HTTPError as e:
@@ -65,11 +65,11 @@ def get_current_weather(lat: float, lon: float) -> CurrentWeatherData:
     try:
         current_weather_data: CurrentWeatherData | None = CurrentWeatherData()
         resp: Response = requests.get(
-            f"{owm_cur_weather_url}{lat}&lon={lon}&lang={language}&appid={api_key}"
+            f"{owm_cur_weather_url}lat={lat}&lon={lon}&lang={language}&appid={api_key}"
             f"&units={units_of_measure}", timeout=5)
-        print(f"get_current_weather response: {resp.status_code}")
-        print(resp.json())
-        print(type(resp.json()))
+        print(f"get_current_weather: {resp.status_code = }")
+        print(f"{resp.json() = }")
+        print(f"{type(resp.json()) = }")
         if resp.status_code == 200 and resp.json():
             current_weather_data = CurrentWeatherData.from_dict(resp.json(), units_of_measure)
     except HTTPError as e:
@@ -94,17 +94,17 @@ def main(city_name: str, state_code: str, country_code: str) -> \
     # Run configure
     # api_key, units_of_measure = configure()
     formats_data: Formats = Formats.set_format_items(units_of_measure)
-    print(f"In main Location: {formats_data}")
+    print(f"In main: {formats_data = }")
 
     location_data: Location = get_lan_lon(city_name, state_code, country_code)
-    print(f"In main Location: {location_data}")
+    print(f"In main: {location_data = }")
     # lat type: <class 'float'>
     # print(f"lat type: {type(location_data.latitude)}")
     # lon type: <class 'float'>
     # print(f"lon type: {type(location_data.longitude)}")
     current_weather_data: CurrentWeatherData = get_current_weather(location_data.lat,
                                                                    location_data.lon)
-    print(f"In main CurrentWeatherData: {current_weather_data}")
+    print(f"In main: {current_weather_data = }")
 
     # print(f"In main location_data: {location_data}")
     # print(f"In main current_weather_data: {current_weather_data}")

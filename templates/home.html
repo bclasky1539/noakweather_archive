@@ -54,7 +54,7 @@
         </div>
     </section>
     <section class="section">
-        {% if current_weather_data.code == 200 %}
+        {% if current_weather_data.cod == 200 %}
             <div class="container-fluid mt-5">
             <div class="row">
                 <div class="offset-md-3">
@@ -62,47 +62,47 @@
                          style="max-width: 20rem;">
                         <div class="card-body">
                             <h5 class="card-title font-weight-bold text-center">Current Weather</h5>
-                            <br> City, Country Code: {{ location_data.city }}, {{ location_data.country }} <br>
-                            Latitude: {{ location_data.latitude }} <br>
-                            Longitude: {{ location_data.longitude }} <br>
-                            <br> {{ current_weather_data.cloud_main }}: {{ current_weather_data.cloud_description }}
+                            <br> City, Country Code: {{ location_data.name }}, {{ location_data.country }} <br>
+                            Latitude: {{ location_data.lat }} <br>
+                            Longitude: {{ location_data.lon }} <br>
+                            <br> {{ current_weather_data.weather[0].main }}: {{ current_weather_data.weather[0].description }}
                             <br>
-                            <img src="https://openweathermap.org/img/wn/{{ current_weather_data.cloud_icon }}@2x.png"
+                            <img src="https://openweathermap.org/img/wn/{{ current_weather_data.weather[0].icon }}@2x.png"
                                  alt="Icon">
                             <br>
-                            Temperature: {{ current_weather_data.temperature }} {{ formats_data.temperature_format }}
+                            Temperature: {{ current_weather_data.main.temp }} {{ formats_data.temperature_format }}
                             <br>
                             Feels
-                            Like: {{ current_weather_data.feels_like }} {{ formats_data.temperature_format }}
+                            Like: {{ current_weather_data.main.feels_like }} {{ formats_data.temperature_format }}
                             <br>
                             Minimum
-                            Temperature: {{ current_weather_data.minimum }} {{ formats_data.temperature_format }}
+                            Temperature: {{ current_weather_data.main.temp_min }} {{ formats_data.temperature_format }}
                             <br>
                             Maximum
-                            Temperature: {{ current_weather_data.maximum }} {{ formats_data.temperature_format }}
+                            Temperature: {{ current_weather_data.main.temp_max }} {{ formats_data.temperature_format }}
                             <br>
-                            Pressure: {{ current_weather_data.pressure }} {{ formats_data.pressure_format }}
+                            Pressure: {{ current_weather_data.main.pressure }} {{ formats_data.pressure_format }}
                             <br>
                             Ground Pressure
-                            : {{ current_weather_data.pressure_ground_level }} {{ formats_data.pressure_format }}
+                            : {{ current_weather_data.main.grnd_level }} {{ formats_data.pressure_format }}
                             <br>
-                            Humidity: {{ current_weather_data.humidity }}{{ formats_data.humidity_format }}
+                            Humidity: {{ current_weather_data.main.humidity }}{{ formats_data.humidity_format }}
                             <br>
                             Visibility: {{ current_weather_data.visibility }} {{ formats_data.visibility_format }}
                             <br>
                             Wind
-                            Speed: {{ current_weather_data.wind_speed }} {{ formats_data.wind_speed_format }}
+                            Speed: {{ current_weather_data.wind.speed }} {{ formats_data.wind_speed_format }}
                             <br>
                             Wind
-                            Direction: {{ current_weather_data.wind_direction }} {{ formats_data.wind_direction_format }}
+                            Direction: {{ current_weather_data.wind.deg }} {{ formats_data.wind_direction_format }}
                             <br>
-                            {% if current_weather_data.wind_gust != -999999.0 %}
-                                Wind Gust: {{ current_weather_data.wind_gust }}
+                            {% if current_weather_data.wind.gust != -999999.0 %}
+                                Wind Gust: {{ current_weather_data.wind.gust }}
                                 {{ formats_data.wind_speed_format }}
                                 <br>
                             {% endif %}
-                            Sunrise: {{ current_weather_data.sunrise }} <br>
-                            Sunset: {{ current_weather_data.sunset }} <br>
+                            Sunrise: {{ current_weather_data.sys.sunrise }} <br>
+                            Sunset: {{ current_weather_data.sys.sunset }} <br>
                         </div>
                     </div>
                 </div>

@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 0.1.6 - Date: February 17, 2025
+
+- Added forecast weather for openweathermap
+
 ## Version 0.1.5 - Date: February 16, 2025
 
 - Updated project structure to put openweathermap code in its own package

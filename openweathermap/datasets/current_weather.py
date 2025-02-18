@@ -91,8 +91,10 @@ class CurrentWeatherData:
     @staticmethod
     def from_dict(obj: Any, units_of_measure: str) -> 'CurrentWeatherData':
         """
+        :param obj                 :      The CurrentWeatherData information.
+        :param units_of_measure    :      The units of measure.
 
-        :rtype: object
+        :return:                          CurrentWeatherData information.
         """
         try:
             _coord = Coord.from_dict(obj.get("coord"))

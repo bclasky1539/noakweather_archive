@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 from requests import Response
 
 from openweathermap.datasets.current_weather import CurrentWeatherData
+from openweathermap.datasets.forecast import Forecast
 from openweathermap.datasets.location import Location
 from openweathermap.datasets.shared import Formats
 from utils.get_class_name import get_full_class_name
@@ -19,6 +20,7 @@ load_dotenv()
 api_key: str | None = os.getenv("API_KEY")
 owm_geo_url: str | None = os.getenv("OWM_GEO_URL")
 owm_cur_weather_url: str | None = os.getenv("OWM_CUR_WEATHER_URL")
+own_forecast_url: str | None = os.getenv("OWM_FRC_WEATHER_URL")
 language: str | None = os.getenv("LANGUAGE")
 units_of_measure: str | None = os.getenv("UNITS_OF_MEASURE")
 
@@ -82,6 +84,33 @@ def get_current_weather(lat: float, lon: float) -> CurrentWeatherData:
     return current_weather_data
 
 
+def get_forcast(lat: float, lon: float) -> Forecast:
+    """
+    :param lat:      The latitude to get the forecast from.
+    :param lon:      The longitude to get the forecast from.
+
+    :return:         ForecastData dataclass representing the forecast.
+    """
+    try:
+        forecast_data: Forecast | None = Forecast()
+        resp: Response = requests.get(
+            f"{own_forecast_url}lat={lat}&lon={lon}&lang={language}&appid={api_key}"
+            f"&units={units_of_measure}", timeout=5)
+        print(f"get_forcast: {resp.status_code = }")
+        print(f"{resp.json() = }")
+        print(f"{type(resp.json()) = }")
+        if resp.status_code == 200 and resp.json():
+            forecast_data = Forecast.from_dict(resp.json(), units_of_measure)
+    except HTTPError as e:
+        print(f"{get_full_class_name(e)}: {e.read().decode()}")
+        forecast_data = None
+    except (IndexError, ValueError, TypeError, AttributeError) as e:
+        print(f"{get_full_class_name(e)}: {e.args}")
+        forecast_data = None
+
+    return forecast_data
+
+
 def main(city_name: str, state_code: str, country_code: str) -> \
         (tuple[Type[Location], Type[CurrentWeatherData], Type[Formats]] | tuple):
     """
@@ -91,31 +120,26 @@ def main(city_name: str, state_code: str, country_code: str) -> \
 
     :return:               Tuple of the Location and the CurrentWeatherData dataclasses.
     """
-    # Run configure
-    # api_key, units_of_measure = configure()
     formats_data: Formats = Formats.set_format_items(units_of_measure)
     print(f"In main: {formats_data = }")
 
     location_data: Location = get_lan_lon(city_name, state_code, country_code)
     print(f"In main: {location_data = }")
-    # lat type: <class 'float'>
-    # print(f"lat type: {type(location_data.latitude)}")
-    # lon type: <class 'float'>
-    # print(f"lon type: {type(location_data.longitude)}")
+
     current_weather_data: CurrentWeatherData = get_current_weather(location_data.lat,
                                                                    location_data.lon)
     print(f"In main: {current_weather_data = }")
 
-    # print(f"In main location_data: {location_data}")
-    # print(f"In main current_weather_data: {current_weather_data}")
+    forecast_data: Forecast = get_forcast(location_data.lat, location_data.lon)
+    print(f"In main: {forecast_data = }")
 
-    return location_data, current_weather_data, formats_data
+    return location_data, current_weather_data, forecast_data, formats_data
 
 
 if __name__ == '__main__':
-    # main('Atlanta', 'GA', country_code='US')
+    main('Atlanta', 'GA', country_code='US')
     # main('Toronto', '', country_code='CA')
     # main('Dublin', '', country_code = 'IE')
     # main('London', '', country_code='GB')
     # main('Solon', 'OH', 'US')
-    main('Letlhakane', '', country_code='BW')
+    # main('Letlhakane', '', country_code='BW')

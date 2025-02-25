@@ -1,5 +1,13 @@
 # NOAK Weather Dashboard project
 
+## Archive Statement:
+
+As of February 2025, this project has been archived and is read-only.
+
+Ongoing development of this project can be found [here](https://github.com/bclasky1539/noakweather).
+
+## Project Overview
+
 This project is a weather dashboard in Python. Currently, it will return the current weather from OpenWeatherMap. In the
 future the project will be improved to include other items such as the following
 
@@ -64,10 +72,8 @@ The file contains the following information
 ## Issues
 
 If you notice any problems with running this, please open an
-issue [here](https://github.com/bclasky1539/noakweather/issues).
+issue [here](https://github.com/bclasky1539/noakweather/issues). This will take you to the issues section for the new NOAK Weather Dashboard project.
 
 ## Fixing Issues and/or Adding New Features
 
-- Feel free to fork and fix an issue(s) or add a feature.
-- Please provide tests for the submitted code.
-- Once the pull request is submitted, it'll be tested and merged.
+- Please refer to the new NOAK Weather Dashboard project [here](https://github.com/bclasky1539/noakweather) for any issues, forking the project and/or adding features.
